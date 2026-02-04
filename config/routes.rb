@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resource :session
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -7,4 +8,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    namespace :v1 do
+      resources :short_urls, only: [] do
+        collection do
+          post :encode
+        end
+      end
+
+      get('short_urls/decode/:short_code', to: 'short_urls#decode', as: :decode_short_url)
+    end
+  end
 end
