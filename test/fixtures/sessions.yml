@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: sessions
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  ip_address :string
+#  user_agent :string
+#  token      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_sessions_on_token    (token) UNIQUE
+#  index_sessions_on_user_id  (user_id)
+#
+
+user_one_session:
+  user: one
+  token: valid_token_for_user_one
+  ip_address: 127.0.0.1
+  user_agent: TestAgent/1.0
+
+user_two_session:
+  user: two
+  token: valid_token_for_user_two
+  ip_address: 127.0.0.1
+  user_agent: TestAgent/1.0

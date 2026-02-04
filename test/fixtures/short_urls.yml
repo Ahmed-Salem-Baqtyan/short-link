@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: short_urls
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  url        :text
+#  code       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_short_urls_on_code     (code) UNIQUE
+#  index_short_urls_on_user_id  (user_id)
+#
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+user_one_url:
+  user: one
+  url: https://example.com/test-url-one
+  code: ABC123
+
+user_two_url:
+  user: two
+  url: https://example.com/test-url-two
+  code: XYZ789
