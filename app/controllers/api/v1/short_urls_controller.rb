@@ -1,0 +1,36 @@
+module Api::V1
+  class ShortUrlsController < ApiController
+    # POST /api/v1/short_urls/encode
+    def encode
+      short_url = current_user.short_urls.create!(encode_params)
+      encoded_url = "#{request.base_url}/api/v1/short_urls/decode/#{short_url.code}"
+      data = { encoded_url: encoded_url }
+
+      render_success(message: "Link encoded successfully", data:)
+    end
+
+    # GET /api/v1/short_urls/decode/:code
+    def decode
+      short_url = current_user.short_urls.find_by(code: params[:code])
+
+      if short_url
+        data = { decoded_url: short_url.url }
+        render_success(message: "Link decoded successfully", data:)
+      else
+        render_not_found(message: "Link not found")
+      end
+    end
+
+    private
+
+    def encode_params
+      params.require(:short_url).permit(:url)
+    end
+
+    def validate_encode_params!
+      param!(:short_url, Hash, required: true, blank: false) do |h|
+        h.param!(:url, String, required: true, blank: false)
+      end
+    end
+  end
+end
