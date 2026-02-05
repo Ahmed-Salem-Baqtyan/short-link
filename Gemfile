@@ -29,9 +29,9 @@ gem "kamal", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-gem "hashids"
+gem 'hashids'
 
-gem "rails_param"
+gem 'rails_param'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -41,7 +41,7 @@ gem "rails_param"
 
 group :development do
   # Add annotations to your models [https://github.com/ctran/annotate_models]
-  gem "annotate"
+  gem 'annotate'
 end
 
 group :development, :test do
@@ -56,10 +56,10 @@ group :development, :test do
 end
 
 group :test do
-  gem "database_cleaner"
-  gem "rspec-rails"
-  gem "shoulda-matchers"
-  gem "factory_bot_rails"
-  gem "faker"
-  gem "rubocop-rails"
+  gem 'database_cleaner'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rubocop-rails'
 end

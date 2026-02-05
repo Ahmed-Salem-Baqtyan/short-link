@@ -1,6 +1,8 @@
 module Api::V1
   class ShortUrlsController < ApiController
-    allow_unauthenticated_access only: [ :decode ]
+
+    before_action :validate_encode_params!, only: [ :encode ]
+    allow_unauthenticated_access only: [:decode]
 
     # POST /api/v1/short_urls/encode
     def encode

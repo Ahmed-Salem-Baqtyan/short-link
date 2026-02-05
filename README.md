@@ -1,73 +1,168 @@
-# ShortLink - URL Shortening Service
+# ShortLink - Professional URL Shortening Service
 
-A robust URL shortening service built with Ruby on Rails that allows users to encode long URLs into short, shareable links and decode them back to their original form.
+<div align="center">
 
-## 🚀 Live Demo
+**Transform long, unwieldy URLs into short, shareable links with enterprise-grade reliability**
 
-[Your deployed application URL here]
+[![Ruby](https://img.shields.io/badge/Ruby-3.3+-red.svg)](https://www.ruby-lang.org/)
+[![Rails](https://img.shields.io/badge/Rails-8.0.2-red.svg)](https://rubyonrails.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue.svg)](https://www.postgresql.org/)
+[![RSpec](https://img.shields.io/badge/Tests-RSpec-green.svg)](https://rspec.info/)
 
-## 📋 Table of Contents
+</div>
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [API Endpoints](#api-endpoints)
-- [Installation & Setup](#installation--setup)
-- [Running the Application](#running-the-application)
-- [Running Tests](#running-tests)
-- [API Documentation](#api-documentation)
-- [Security Considerations](#security-considerations)
-- [Scalability Considerations](#scalability-considerations)
-- [Architecture Decisions](#architecture-decisions)
+---
+
+## 🎯 Overview
+
+**ShortLink** is a production-ready URL shortening service that transforms lengthy URLs into concise, memorable short links. Built with Ruby on Rails, it provides a robust RESTful API for encoding and decoding URLs with enterprise-level security, scalability, and reliability.
+
+### The Problem It Solves
+
+Long URLs are difficult to share, remember, and can break in emails or messaging apps. ShortLink solves this by:
+- Converting URLs like `https://codesubmit.io/library/react?category=frontend&level=advanced` 
+- Into short links like `http://your.domain/GeAi9K`
+- While maintaining persistence, security, and tracking capabilities
+
+### Key Highlights
+
+- 🔒 **Security-First Design**: HTTPS enforcement, SSRF protection, and comprehensive input validation
+- 🚀 **High Performance**: Collision-free encoding using Hashids, optimized for scale
+- 💾 **Persistent Storage**: PostgreSQL ensures URLs survive application restarts
+- 🔐 **Dual Authentication**: API-level and user-level token authentication
+- 📊 **Production Ready**: Comprehensive test coverage, error handling, and monitoring
+- 🌐 **Public Decode**: Anyone can decode short URLs (no authentication required)
+
+---
+
+## 🛠 Technology Stack
+
+### Core Framework
+- **Ruby 3.3+** - Modern, performant Ruby version with latest features
+- **Rails 8.0.2** - Latest Rails framework with enhanced performance and security
+- **PostgreSQL 12+** - Robust relational database with ACID compliance
+
+### Key Libraries & Tools
+- **Hashids** - Deterministic, collision-free URL encoding algorithm
+- **BCrypt** - Industry-standard password hashing for secure authentication
+- **RSpec** - Comprehensive testing framework with 60+ test cases
+- **FactoryBot** - Flexible test data generation
+- **rails_param** - Strong parameter validation and sanitization
+
+### Architecture & Patterns
+- **RESTful API Design** - Clean, intuitive endpoint structure
+- **Service Objects** - URL validation logic encapsulated in dedicated services
+- **Concerns Pattern** - Reusable authentication, error handling, and response modules
+- **ActiveRecord ORM** - Database abstraction with migration support
+
+### Security Features
+- **Two-Layer Authentication** - API access tokens + user session tokens
+- **SSRF Protection** - Blocks localhost, private IPs, and loopback addresses
+- **Input Sanitization** - Comprehensive URL validation and parameter filtering
+- **Rate Limiting** - Per-user URL creation limits (1000 URLs/user)
+
+### Development & Testing
+- **RSpec** - Behavior-driven development with extensive test coverage
+- **Database Cleaner** - Clean test database state between tests
+- **Shoulda Matchers** - Elegant model and controller testing
+- **Faker** - Realistic test data generation
+
+---
 
 ## ✨ Features
 
-- **URL Encoding**: Convert long URLs into short, memorable codes
-- **URL Decoding**: Retrieve original URLs from short codes
-- **User Authentication**: Token-based authentication for API access
-- **Persistent Storage**: PostgreSQL database ensures URLs persist after restarts
-- **URL Validation**: Comprehensive validation including HTTPS enforcement, localhost blocking, and private IP filtering
-- **Rate Limiting**: Per-user limits to prevent abuse (1000 URLs per user)
-- **RESTful API**: Clean JSON API with proper HTTP status codes
-- **Error Handling**: Graceful error handling with descriptive messages
+### Core Functionality
+- ✅ **URL Encoding** - Convert long URLs into short, memorable codes (e.g., `GeAi9K`)
+- ✅ **URL Decoding** - Retrieve original URLs from short codes instantly
+- ✅ **Public Decode Access** - Anyone can decode short URLs without authentication
+- ✅ **Persistent Storage** - URLs survive application restarts and deployments
 
-## 🛠 Tech Stack
+### Security & Validation
+- 🔒 **HTTPS Enforcement** - Only secure HTTPS URLs are accepted
+- 🛡️ **SSRF Protection** - Blocks localhost, private IPs (192.168.x.x, 10.x.x.x), and loopback addresses
+- ✅ **Comprehensive URL Validation** - Format, protocol, host, and security checks
+- 🔐 **Dual Authentication** - API access token + user session token for encode operations
+- 🚫 **Rate Limiting** - Per-user limits prevent abuse (configurable, default: 1000 URLs/user)
 
-- **Ruby**: 3.x
-- **Rails**: 8.0.2
-- **Database**: PostgreSQL
-- **Authentication**: BCrypt with session tokens
-- **URL Encoding**: Hashids (collision-free, deterministic encoding)
-- **Testing**: Minitest
-- **Environment Management**: dotenv-rails
+### API & Integration
+- 📡 **RESTful JSON API** - Clean, intuitive endpoint design
+- 📝 **Proper HTTP Status Codes** - 200, 401, 404, 422, 500 with descriptive messages
+- 🔄 **Idempotent Operations** - Safe to retry failed requests
+- 📊 **Structured Error Responses** - Consistent JSON error format
 
-## 🔌 API Endpoints
+### Developer Experience
+- 🧪 **60+ Test Cases** - Comprehensive RSpec test suite
+- 📚 **Detailed Documentation** - API docs, setup guides, and architecture notes
+- 🐛 **Graceful Error Handling** - User-friendly error messages
+- 🔧 **Environment Configuration** - Easy setup with .env files
+- 📦 **Database Migrations** - Version-controlled schema changes
 
-### Authentication
+---
 
-#### Create Session (Login)
+## 📋 Table of Contents
+
+- [Quick Start](#quick-start)
+- [Installation & Setup](#installation--setup)
+- [API Documentation](#api-documentation)
+- [Testing the API](#testing-the-api)
+- [Running Tests](#running-tests)
+- [Security Considerations](#security-considerations)
+- [Scalability Considerations](#scalability-considerations)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+
+---
+
+## 📮 Postman Collection
+
+**Ready-to-use Postman collection included!**
+
+Import `ShortLink_API.postman_collection.json` into Postman to instantly test all endpoints with:
+- ✅ Pre-configured requests
+- ✅ Auto-saved tokens
+- ✅ Error case examples
+- ✅ Complete workflow
+
+[Jump to Postman instructions →](#testing-the-api)
+
+---
+
+## 🚀 Quick Start
+
+Get ShortLink up and running in 5 minutes:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/short-link.git
+cd short-link
+
+# Install dependencies
+bundle install
+
+# Setup database
+cp .env.example .env
+# Edit .env with your database credentials
+rails db:create db:migrate db:seed
+
+# Start the server
+rails server
 ```
-POST /api/v1/auth/sessions/create
-```
 
-### Short URLs
+The API will be available at `http://localhost:3000`
 
-#### Encode URL
-```
-POST /api/v1/short_urls/encode
-```
-
-#### Decode URL
-```
-GET /api/v1/short_urls/decode/:code
-```
+---
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
 
-- Ruby 3.x or higher
-- PostgreSQL 12 or higher
-- Bundler
+Before you begin, ensure you have the following installed:
+
+- **Ruby 3.3+** - [Install Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+- **Rails 8.0+** - Installed via bundler
+- **PostgreSQL 12+** - [Install PostgreSQL](https://www.postgresql.org/download/)
+- **Git** - [Install Git](https://git-scm.com/downloads)
+- **Bundler** - `gem install bundler`
 
 ### Step 1: Clone the Repository
 
@@ -82,114 +177,285 @@ cd short-link
 bundle install
 ```
 
+This will install all required gems including:
+- Rails framework
+- PostgreSQL adapter
+- Authentication libraries (BCrypt)
+- Testing frameworks (RSpec, FactoryBot)
+- URL encoding (Hashids)
+- And more...
+
 ### Step 3: Environment Configuration
 
-Create a `.env` file in the root directory:
+Create your environment configuration file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit the `.env` file with your database credentials:
+Edit the `.env` file with your configuration:
 
 ```env
 # Database Configuration
-DB_USERNAME=your_db_username
-DB_PASSWORD=your_db_password
+DB_USERNAME=your_postgres_username
+DB_PASSWORD=your_postgres_password
 DB_HOST=localhost
 DB_PORT=5432
 
 # Rails Configuration
 RAILS_MAX_THREADS=5
+RAILS_ENV=development
 ```
 
-### Step 4: Database Setup
+**Note:** The `.env` file is gitignored for security. Never commit credentials to version control.
+
+### Step 4: Configure Rails Credentials
+
+Set up your API access token in Rails encrypted credentials:
 
 ```bash
-# Create the database
-rails db:create
-
-# Run migrations
-rails db:migrate
-
-# Seed the database (optional)
-rails db:seed
-```
-
-### Step 5: Set API Access Token
-
-Edit Rails credentials to set your API access token:
-
-```bash
+# For development
 EDITOR="nano" rails credentials:edit
 ```
 
-Add the following:
+Add the following to the credentials file:
 
 ```yaml
-api_access_token: your_secure_token_here
+api_access_token: your_secure_random_token_here
 ```
 
-Or for production:
+Generate a secure token with:
+
+```bash
+rails secret
+```
+
+**For production:**
 
 ```bash
 EDITOR="nano" rails credentials:edit --environment production
 ```
 
-## 🏃 Running the Application
+### Step 5: Database Setup
 
-### Development Mode
+#### Create the Database
+
+```bash
+rails db:create
+```
+
+This creates:
+- `devDB10` (development)
+- `testDB20` (test)
+
+#### Run Migrations
+
+```bash
+rails db:migrate
+```
+
+This creates the following tables:
+- `users` - User accounts
+- `sessions` - Authentication sessions
+- `short_urls` - URL mappings
+
+#### Seed the Database (Optional)
+
+```bash
+rails db:seed
+```
+
+This creates:
+- Sample user account
+- Demo short URLs for testing
+
+### Step 6: Verify Installation
+
+Run the test suite to ensure everything is set up correctly:
+
+```bash
+bundle exec rspec
+```
+
+You should see all tests passing (60+ specs).
+
+### Step 7: Start the Server
+
+#### Development Mode
 
 ```bash
 rails server
+# or
+rails s
 ```
 
-The application will be available at `http://localhost:3000`
+The application will be available at: `http://localhost:3000`
 
-### Production Mode
+#### Production Mode
 
 ```bash
 RAILS_ENV=production rails server
 ```
 
-## 🧪 Running Tests
+---
 
-Run all tests:
+## 🔧 Configuration
 
-```bash
-rails test
+### Database Configuration
+
+The application uses PostgreSQL. Configuration is in `config/database.yml`:
+
+```yaml
+development:
+  adapter: postgresql
+  database: devDB10
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] || 'localhost' %>
+  port: <%= ENV['DB_PORT'] || 5432 %>
 ```
 
-Run specific test files:
+### Environment Variables
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `DB_USERNAME` | PostgreSQL username | - | Yes |
+| `DB_PASSWORD` | PostgreSQL password | - | Yes |
+| `DB_HOST` | Database host | `localhost` | No |
+| `DB_PORT` | Database port | `5432` | No |
+| `RAILS_MAX_THREADS` | Max threads for Puma | `5` | No |
+| `RAILS_ENV` | Environment (development/test/production) | `development` | No |
+
+### API Access Token
+
+The API requires an access token for all requests. This is configured in Rails credentials:
 
 ```bash
-rails test test/controllers/api/v1/short_urls_controller_test.rb
-rails test test/controllers/api/v1/auth/sessions_controller_test.rb
+# View current credentials
+rails credentials:show
+
+# Edit credentials
+EDITOR="nano" rails credentials:edit
 ```
 
-Run tests with verbose output:
+---
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+#### 1. PostgreSQL Connection Error
+
+**Error:** `could not connect to server: Connection refused`
+
+**Solution:**
+```bash
+# Check if PostgreSQL is running
+sudo service postgresql status
+
+# Start PostgreSQL
+sudo service postgresql start
+
+# Or on macOS with Homebrew
+brew services start postgresql
+```
+
+#### 2. Database Does Not Exist
+
+**Error:** `FATAL: database "devDB10" does not exist`
+
+**Solution:**
+```bash
+rails db:create
+```
+
+#### 3. Pending Migrations
+
+**Error:** `Migrations are pending`
+
+**Solution:**
+```bash
+rails db:migrate
+```
+
+#### 4. Bundle Install Fails
+
+**Error:** `An error occurred while installing pg`
+
+**Solution:**
+```bash
+# Install PostgreSQL development headers
+# Ubuntu/Debian
+sudo apt-get install libpq-dev
+
+# macOS
+brew install postgresql
+
+# Then retry
+bundle install
+```
+
+#### 5. Credentials Key Missing
+
+**Error:** `Missing encryption key to decrypt file`
+
+**Solution:**
+```bash
+# Generate a new master key
+rails credentials:edit
+# This will create config/master.key automatically
+```
+
+---
+
+## 📱 API Health Check
+
+Once the server is running, verify it's working:
 
 ```bash
-rails test -v
+curl http://localhost:3000
 ```
+
+Expected response: `200 OK` With server is up message
+
+---
 
 ## 📖 API Documentation
 
-### Authentication
-
-All API requests (except login) require two headers:
+### Base URL
 
 ```
-API-ACCESS-TOKEN: your_api_access_token
-Authorization: Bearer your_user_session_token
+Development: http://localhost:3000
 ```
 
-### 1. Create Session (Login)
+### Authentication Overview
 
-**Endpoint:** `POST /api/v1/auth/sessions/create`
+ShortLink uses a **two-layer authentication system**:
+
+1. **API Access Token** (Required for ALL endpoints)
+   - Application-level security
+   - Configured in Rails credentials
+   - Passed via `API-ACCESS-TOKEN` header
+
+2. **User Session Token** (Required for encode only)
+   - User-level authentication
+   - Obtained via login endpoint
+   - Passed via `Authorization: Bearer {token}` header
+
+---
+
+## 🔐 Authentication Endpoint
+
+### Create Session (Login)
+
+Authenticate a user and receive a session token for making authenticated requests.
+
+**Endpoint:** `POST /api/v1/auth/sessions`
+
+**Authentication Required:** API Access Token only
 
 **Headers:**
-```
+```http
 Content-Type: application/json
 API-ACCESS-TOKEN: your_api_access_token
 ```
@@ -198,30 +464,60 @@ API-ACCESS-TOKEN: your_api_access_token
 ```json
 {
   "email_address": "user@example.com",
-  "password": "password123"
+  "password": "your_password"
 }
 ```
 
-**Success Response (200):**
+**Success Response (200 OK):**
 ```json
 {
-  "token": "abc123xyz789..."
+  "status_code": 200,
+  "success": true,
+  "message": "Logged in successfully",
+  "data": {
+    "token": "xYz9KpQmN3vB7wL2jR8tF5hD1cS4gA6e",
+    "user": {
+      "id": 1,
+      "email_address": "user@example.com"
+    }
+  }
 }
 ```
 
-**Error Response (401):**
+**Error Response (401 Unauthorized):**
 ```json
 {
-  "error": "Invalid email address or password"
+  "status_code": 401,
+  "success": false,
+  "message": "Invalid email address or password"
 }
 ```
 
-### 2. Encode URL
+**cURL Example:**
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/sessions/create \
+  -H "Content-Type: application/json" \
+  -H "API-ACCESS-TOKEN: your_api_access_token" \
+  -d '{
+    "email_address": "user@example.com",
+    "password": "password123"
+  }'
+```
+
+---
+
+## 🔗 Encode Endpoint
+
+### Encode a URL
+
+Converts a long URL into a shortened URL with a unique code.
 
 **Endpoint:** `POST /api/v1/short_urls/encode`
 
+**Authentication Required:** API Access Token + User Session Token
+
 **Headers:**
-```
+```http
 Content-Type: application/json
 API-ACCESS-TOKEN: your_api_access_token
 Authorization: Bearer your_session_token
@@ -236,7 +532,7 @@ Authorization: Bearer your_session_token
 }
 ```
 
-**Success Response (200):**
+**Success Response (200 OK):**
 ```json
 {
   "status_code": 200,
@@ -248,34 +544,117 @@ Authorization: Bearer your_session_token
 }
 ```
 
-**Error Response (422):**
+**How It Works:**
+
+1. User sends a long URL to the `/encode` endpoint
+2. System validates the URL (HTTPS, valid format, not localhost/private IP)
+3. URL is saved to database and receives a unique ID
+4. ID is encoded using Hashids algorithm into a short code (e.g., `GeAi9K`)
+5. Full shortened URL is returned to the user
+
+**URL Validation Rules:**
+
+- ✅ Must be a valid URL format
+- ✅ Must use HTTPS protocol (HTTP is rejected)
+- ✅ Must have a valid host
+- ❌ Cannot be localhost
+- ❌ Cannot be private IP addresses (192.168.x.x, 10.x.x.x, 172.16.x.x)
+- ❌ Cannot be loopback addresses (127.0.0.1)
+- ✅ Can include query parameters, fragments, ports, and paths
+- ✅ Whitespace is automatically trimmed
+
+**Error Responses:**
+
+**400 Bad Request** - Missing or invalid parameters:
+```json
+{
+  "status_code": 400,
+  "success": false,
+  "message": "Parameter short_url is required"
+}
+```
+
+**401 Unauthorized** - Missing or invalid authentication:
+```json
+{
+  "status_code": 401,
+  "success": false,
+  "message": "Unauthorized"
+}
+```
+
+**422 Unprocessable Entity** - Validation failed:
 ```json
 {
   "status_code": 422,
   "success": false,
-  "message": "Url must be a valid URL"
+  "message": "Validation failed: Url must use HTTPS"
 }
 ```
 
-**Validation Rules:**
-- URL must be present
-- URL must use HTTPS protocol
-- URL must have a valid host
-- Localhost URLs are not allowed
-- Private or loopback IP addresses are not allowed
-- Maximum 1000 URLs per user
+**422 Unprocessable Entity** - Rate limit exceeded:
+```json
+{
+  "status_code": 422,
+  "success": false,
+  "message": "You have reached the limit of short links, please upgrade to a paid plan to create more links."
+}
+```
 
-### 3. Decode URL
+**cURL Example:**
+```bash
+curl -X POST http://localhost:3000/api/v1/short_urls/encode \
+  -H "Content-Type: application/json" \
+  -H "API-ACCESS-TOKEN: your_api_access_token" \
+  -H "Authorization: Bearer your_session_token" \
+  -d '{
+    "short_url": {
+      "url": "https://codesubmit.io/library/react"
+    }
+  }'
+```
+
+**Valid URL Examples:**
+```json
+✅ "https://example.com"
+✅ "https://example.com/path/to/page"
+✅ "https://example.com:8080/api"
+✅ "https://example.com/page?param=value&other=test"
+✅ "https://example.com/page#section"
+✅ "https://subdomain.example.com/path"
+```
+
+**Invalid URL Examples:**
+```json
+❌ "http://example.com" (must be HTTPS)
+❌ "https://localhost/test" (localhost blocked)
+❌ "https://192.168.1.1/test" (private IP blocked)
+❌ "https://127.0.0.1/test" (loopback blocked)
+❌ "example.com" (missing protocol)
+❌ "not-a-url" (invalid format)
+```
+
+---
+
+## 🔓 Decode Endpoint
+
+### Decode a Short URL
+
+Retrieves the original URL from a short code. **This is a public endpoint** - no user authentication required!
 
 **Endpoint:** `GET /api/v1/short_urls/decode/:code`
 
+**Authentication Required:** API Access Token only (no user session needed)
+
 **Headers:**
-```
+```http
 API-ACCESS-TOKEN: your_api_access_token
-Authorization: Bearer your_session_token
 ```
 
-**Success Response (200):**
+**URL Parameters:**
+- `code` (string, required) - The short code to decode (e.g., `GeAi9K`)
+
+**Success Response (200 OK):**
 ```json
 {
   "status_code": 200,
@@ -287,464 +666,249 @@ Authorization: Bearer your_session_token
 }
 ```
 
-**Error Response (404):**
+**How It Works:**
+
+1. User sends a GET request with the short code in the URL
+2. System looks up the code in the database
+3. If found, returns the original URL
+4. If not found, returns a 404 error
+
+**Key Features:**
+
+- 🌐 **Public Access** - Anyone with the API token can decode any short URL
+- 🔓 **No User Authentication** - Session token not required
+- ⚡ **Fast Lookup** - Database indexed for instant retrieval
+- 🔄 **Unlimited Decodes** - Same URL can be decoded multiple times
+- 🔒 **Case Sensitive** - Codes are case-sensitive (`GeAi9K` ≠ `geai9k`)
+
+**Error Response (404 Not Found):**
 ```json
 {
   "status_code": 404,
   "success": false,
-  "message": "Link not found"
+  "message": "This is a 404 error, which means you've entered an invalid URL"
 }
 ```
 
-### Error Responses
-
-The API uses standard HTTP status codes:
-
-- `200 OK`: Request succeeded
-- `400 Bad Request`: Invalid request parameters
-- `401 Unauthorized`: Missing or invalid authentication
-- `404 Not Found`: Resource not found
-- `422 Unprocessable Entity`: Validation failed
-- `500 Internal Server Error`: Server error
-
-## 🔒 Security Considerations
-
-### Identified Attack Vectors & Mitigations
-
-#### 1. **SSRF (Server-Side Request Forgery)**
-
-**Risk**: Attackers could encode internal network URLs to probe internal services.
-
-**Mitigation Implemented**:
-- ✅ Blocked localhost URLs
-- ✅ Blocked private IP ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)
-- ✅ Blocked loopback addresses (127.0.0.0/8)
-- ✅ HTTPS-only enforcement prevents many protocol-based attacks
-
-**Code Reference**: `app/services/v1/short_url/url_validator.rb`
-
-#### 2. **Rate Limiting / Resource Exhaustion**
-
-**Risk**: Malicious users could create unlimited short URLs, exhausting database resources.
-
-**Mitigation Implemented**:
-- ✅ Per-user limit of 1000 URLs
-- ✅ User authentication required for all operations
-- ✅ API access token required
-
-**Future Improvements**:
-- ⚠️ Add time-based rate limiting (e.g., 100 requests per hour)
-- ⚠️ Implement Redis-based rate limiting for better performance
-- ⚠️ Add CAPTCHA for suspicious activity
-
-#### 3. **SQL Injection**
-
-**Risk**: Malicious input could manipulate database queries.
-
-**Mitigation Implemented**:
-- ✅ ActiveRecord ORM with parameterized queries
-- ✅ Strong parameters for input sanitization
-- ✅ Rails param validation using `rails_param` gem
-
-#### 4. **Authentication & Authorization**
-
-**Risk**: Unauthorized access to encode/decode operations.
-
-**Mitigation Implemented**:
-- ✅ Two-layer authentication (API token + user session token)
-- ✅ BCrypt password hashing
-- ✅ Secure session token generation (32-character base58)
-- ✅ User-scoped URL access (users can only decode their own URLs)
-
-**Future Improvements**:
-- ⚠️ Implement token expiration
-- ⚠️ Add refresh token mechanism
-- ⚠️ Implement IP-based session validation
-- ⚠️ Add multi-factor authentication
-
-#### 5. **XSS (Cross-Site Scripting)**
-
-**Risk**: Malicious URLs containing JavaScript could be stored and executed.
-
-**Mitigation Implemented**:
-- ✅ API returns JSON only (no HTML rendering)
-- ✅ URL validation ensures proper URL format
-- ✅ Rails automatic escaping in any view rendering
-
-#### 6. **Brute Force Attacks**
-
-**Risk**: Attackers could try to guess short codes or passwords.
-
-**Mitigation Implemented**:
-- ✅ Short codes generated using Hashids (deterministic based on database ID)
-- ✅ BCrypt slow hashing for passwords
-
-**Future Improvements**:
-- ⚠️ Account lockout after failed login attempts
-- ⚠️ Exponential backoff for failed requests
-
-#### 7. **Information Disclosure**
-
-**Risk**: Error messages could reveal sensitive system information.
-
-**Mitigation Implemented**:
-- ✅ Generic error messages in production
-- ✅ Detailed errors only in development mode
-- ✅ Exception handling for all common error cases
-
-#### 8. **Malicious URL Distribution**
-
-**Risk**: Service could be used to distribute phishing or malware links.
-
-**Future Improvements**:
-- ⚠️ Integrate URL reputation checking (Google Safe Browsing API)
-- ⚠️ Implement URL blacklist
-- ⚠️ Add reporting mechanism for malicious URLs
-- ⚠️ Monitor and flag suspicious patterns
-
-#### 9. **Code Collision & Enumeration**
-
-**Risk**: Predictable short codes could allow enumeration of all URLs.
-
-**Mitigation Implemented**:
-- ✅ Hashids provides obfuscation of sequential IDs
-- ✅ Codes are not easily guessable or sequential
-
-**Future Improvements**:
-- ⚠️ Add random salt to Hashids configuration
-- ⚠️ Implement custom alphabet for additional obfuscation
-
-## 📈 Scalability Considerations
-
-### Current Implementation
-
-The current implementation uses:
-- **PostgreSQL** for persistent storage
-- **Hashids** for deterministic code generation
-- **Rails autoincrement IDs** as the basis for codes
-
-### Collision Problem
-
-**Current Solution**: The Hashids library generates unique codes based on database auto-increment IDs, making collisions mathematically impossible within a single database.
-
-**How it works**:
-1. URL is saved to database, receives unique ID (e.g., ID: 1234)
-2. Hashids encodes this ID into a short code (e.g., "GeAi9K")
-3. Decoding "GeAi9K" always returns 1234
-4. No collisions possible as each ID is unique
-
-### Scaling Strategies
-
-#### 1. **Horizontal Scaling - Database Sharding**
-
-**Problem**: Single database becomes bottleneck at high scale.
-
-**Solution**:
-```
-User ID-based sharding:
-- Shard 1: User IDs 1-1,000,000
-- Shard 2: User IDs 1,000,001-2,000,000
-- Shard 3: User IDs 2,000,001-3,000,000
+**401 Unauthorized** - Missing or invalid API token:
+```json
+{
+  "status_code": 401,
+  "success": false,
+  "message": "You dont have access to this resource"
+}
 ```
 
-**Implementation**:
-- Add `shard_id` to URL code
-- Route requests based on shard identifier
-- Each shard maintains independent ID sequences
-
-**Code format**: `{shard_id}-{hashid}`
-Example: `s1-GeAi9K` (shard 1, code GeAi9K)
-
-#### 2. **Caching Layer**
-
-**Problem**: Repeated decode requests hit database unnecessarily.
-
-**Solution**:
-```ruby
-# Redis caching implementation
-def decode(code)
-  cached_url = Rails.cache.fetch("short_url:#{code}", expires_in: 24.hours) do
-    ShortUrl.find_by(code: code)&.url
-  end
-  
-  cached_url || raise NotFound
-end
+**cURL Example:**
+```bash
+curl -X GET http://localhost:3000/api/v1/short_urls/decode/GeAi9K \
+  -H "API-ACCESS-TOKEN: your_api_access_token"
 ```
 
-**Benefits**:
-- Reduces database load by 80-90%
-- Sub-millisecond response times
-- Handles traffic spikes gracefully
+**Browser Access:**
 
-**Implementation Priority**: HIGH - Easy to implement, huge impact
-
-#### 3. **Read Replicas**
-
-**Problem**: Read-heavy workload (decode operations outnumber encodes 10:1 typically).
-
-**Solution**:
-- Master database for writes (encode)
-- Multiple read replicas for decodes
-- Load balancer distributes decode requests
-
-```ruby
-# Rails configuration
-config.active_record.reading_role = :reading
-config.active_record.writing_role = :writing
-
-# Controller usage
-def decode
-  ActiveRecord::Base.connected_to(role: :reading) do
-    ShortUrl.find_by(code: params[:code])
-  end
-end
+You can also access decode URLs directly in a browser:
+```
+http://localhost:3000/api/v1/short_urls/decode/GeAi9K
 ```
 
-#### 4. **CDN & Edge Caching**
-
-**Problem**: Geographic latency for global users.
-
-**Solution**:
-- CloudFlare/Fastly CDN for static content
-- Edge caching for popular short URLs
-- Redirect at edge without hitting origin server
-
-#### 5. **Microservices Architecture**
-
-**At Scale (10M+ requests/day)**:
-
-```
-┌─────────────┐
-│   API GW    │ - Rate limiting, auth
-└──────┬──────┘
-       │
-   ┌───┴────┐
-   │ Router │
-   └───┬────┘
-       │
-   ┌───┼────────────┐
-   │   │            │
-   ▼   ▼            ▼
-Encode Service  Decode Service  Analytics
-   │                │
-   │                │
-   ▼                ▼
-Master DB      Read Replicas
-                    │
-                    ▼
-              Redis Cache
-```
-
-#### 6. **Alternative ID Generation Strategies**
-
-For truly distributed systems, consider:
-
-**a) Snowflake IDs** (Twitter's approach):
-```
-[41 bits: timestamp][10 bits: machine ID][12 bits: sequence]
-= 64-bit unique ID, sortable by time
-```
-
-**b) UUIDs**:
-```ruby
-code = SecureRandom.uuid
-# Pros: No coordination needed
-# Cons: Longer codes (not ideal for URL shortening)
-```
-
-**c) Distributed ID Generator Service**:
-- Centralized service generates ID ranges
-- Each app server gets range (e.g., 1-10000)
-- No collisions, no coordination overhead
-
-### Performance Benchmarks & Targets
-
-**Current (Single Server)**:
-- Encode: ~50ms average
-- Decode: ~30ms average
-- Throughput: ~1000 req/sec
-
-**With Optimizations**:
-- Redis cache: Decode <5ms
-- Read replicas: 10,000 req/sec
-- CDN: 100,000+ req/sec for cached URLs
-
-### Database Indexing Strategy
-
-**Current Indexes**:
-```ruby
-# Unique index on code for fast lookups
-add_index :short_urls, :code, unique: true
-
-# Composite index for user-specific queries
-add_index :short_urls, [:user_id, :code]
-
-# User lookup
-add_index :short_urls, :user_id
-```
-
-**At Scale**:
-- Partition tables by date (for archival)
-- Consider PostgreSQL partitioning
-- Archive old/inactive URLs to cold storage
-
-### Monitoring & Observability
-
-**Essential Metrics**:
-- Request latency (p50, p95, p99)
-- Error rates
-- Cache hit ratio
-- Database query time
-- CPU/Memory usage
-
-**Tools**:
-- New Relic / DataDog for APM
-- Prometheus + Grafana for metrics
-- ELK stack for log analysis
-
-## 🏗 Architecture Decisions
-
-### 1. **Why Hashids?**
-
-**Alternatives Considered**:
-- Base62 encoding
-- Random string generation
-- UUID shortening
-
-**Chosen**: Hashids
-
-**Reasons**:
-- Deterministic (same input = same output)
-- No collision possible
-- Reversible (decode without DB lookup if needed)
-- Configurable length and alphabet
-- Battle-tested library
-
-### 2. **Why PostgreSQL?**
-
-**Alternatives Considered**:
-- MySQL
-- SQLite
-- NoSQL (MongoDB, DynamoDB)
-
-**Chosen**: PostgreSQL
-
-**Reasons**:
-- ACID compliance critical for financial/audit scenarios
-- Excellent JSON support for future feature expansion
-- Robust indexing and query optimization
-- Better handling of concurrent writes
-- Great Rails support
-
-### 3. **Why User-Scoped URLs?**
-
-**Decision**: Each URL is associated with a user and can only be decoded by that user.
-
-**Reasons**:
-- Privacy: Users' URLs remain private
-- Accountability: Track who created what
-- Quotas: Easy to implement per-user limits
-- Monetization: Enable paid tiers in future
-
-**Alternative**: Public URL shortener (like bit.ly)
-- Would require different access control
-- More suitable for social media sharing
-- Currently not implemented but easy to add
-
-### 4. **Authentication Strategy**
-
-**Two-layer approach**:
-1. API Access Token (application-level)
-2. User Session Token (user-level)
-
-**Reasoning**:
-- Separation of concerns
-- API token prevents unauthorized access to entire API
-- Session token provides user context
-- Easy to revoke/rotate separately
-
-## 🔄 Future Enhancements
-
-### Short Term
-- [ ] Add Redis caching
-- [ ] Implement time-based rate limiting
-- [ ] Add API documentation UI (Swagger/OpenAPI)
-- [ ] Add analytics (click tracking)
-- [ ] Custom short codes (vanity URLs)
-
-### Medium Term
-- [ ] URL expiration dates
-- [ ] QR code generation
-- [ ] Link preview metadata
-- [ ] Bulk URL creation API
-- [ ] URL health checking
-
-### Long Term
-- [ ] Read replicas for scaling
-- [ ] Geographic distribution
-- [ ] A/B testing for URLs
-- [ ] Link management dashboard
-- [ ] Browser extension
-
-## 📝 Development Notes
-
-### Code Quality Standards
-
-- **Ruby Style Guide**: Following Rails best practices
-- **Testing**: Comprehensive test coverage for all endpoints
-- **Security**: Input validation, authentication, authorization
-- **Error Handling**: Graceful error handling with proper HTTP codes
-- **Documentation**: Inline comments and comprehensive README
-
-### Project Structure
-
-```
-app/
-├── controllers/
-│   ├── api/v1/
-│   │   ├── api_controller.rb          # Base API controller
-│   │   ├── short_urls_controller.rb   # Encode/Decode endpoints
-│   │   └── auth/
-│   │       └── sessions_controller.rb  # Authentication
-│   └── concerns/
-│       ├── authentication.rb           # Auth logic
-│       ├── exception_handler.rb        # Error handling
-│       ├── json_responders.rb          # JSON response helpers
-│       └── action_params_validator.rb  # Param validation
-├── models/
-│   ├── user.rb                         # User model
-│   ├── session.rb                      # Session model
-│   ├── short_url.rb                    # ShortURL model
-│   └── current.rb                      # Current context
-└── services/
-    └── v1/short_url/
-        └── url_validator.rb            # URL validation logic
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👤 Author
-
-Your Name
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
-
-## 🙏 Acknowledgments
-
-- CodeSubmit for the assignment
-- Rails community for excellent documentation
-- Hashids library for collision-free encoding
+Just ensure the API-ACCESS-TOKEN is included (via browser extension or query parameter if configured).
 
 ---
 
-**Note**: This application is a demonstration project and should undergo additional security hardening and load testing before production deployment.
+## 🔄 Complete Workflow Example
+
+Here's a complete example showing the full encode → decode workflow:
+
+### Step 1: Login to Get Session Token
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/sessions \
+  -H "Content-Type: application/json" \
+  -H "API-ACCESS-TOKEN: your_api_access_token" \
+  -d '{
+    "email_address": "demo@example.com",
+    "password": "password123"
+  }'
+```
+
+**Response:**
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "Logged in successfully",
+  "data": {
+    "token": "xYz9KpQmN3vB7wL2jR8tF5hD1cS4gA6e",
+    "user": {
+      "id": 1,
+      "email_address": "demo@example.com"
+    }
+  }
+}
+```
+
+Save the token: `xYz9KpQmN3vB7wL2jR8tF5hD1cS4gA6e`
+
+### Step 2: Encode a URL
+
+```bash
+curl -X POST http://localhost:3000/api/v1/short_urls/encode \
+  -H "Content-Type: application/json" \
+  -H "API-ACCESS-TOKEN: your_api_access_token" \
+  -H "Authorization: Bearer xYz9KpQmN3vB7wL2jR8tF5hD1cS4gA6e" \
+  -d '{
+    "short_url": {
+      "url": "https://codesubmit.io/library/react"
+    }
+  }'
+```
+
+**Response:**
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "Link encoded successfully",
+  "data": {
+    "encoded_url": "http://localhost:3000/api/v1/short_urls/decode/GeAi9K"
+  }
+}
+```
+
+Save the code: `GeAi9K`
+
+### Step 3: Decode the Short URL
+
+```bash
+curl -X GET http://localhost:3000/api/v1/short_urls/decode/GeAi9K \
+  -H "API-ACCESS-TOKEN: your_api_access_token"
+```
+
+**Response:**
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "Link decoded successfully",
+  "data": {
+    "decoded_url": "https://codesubmit.io/library/react"
+  }
+}
+```
+
+**Note:** The decode endpoint doesn't require the session token - anyone with the API access token can decode any short URL!
+
+---
+
+## 📊 Response Format
+
+All API responses follow a consistent JSON structure:
+
+### Success Response Structure
+
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "Operation successful",
+  "data": {
+    // Response data here
+  }
+}
+```
+
+### Error Response Structure
+
+```json
+{
+  "status_code": 400,
+  "success": false,
+  "message": "Error description here"
+}
+```
+
+### HTTP Status Codes
+
+| Code | Meaning | When It Occurs |
+|------|---------|----------------|
+| `200` | OK | Request succeeded |
+| `400` | Bad Request | Invalid parameters or malformed request |
+| `401` | Unauthorized | Missing or invalid authentication credentials |
+| `404` | Not Found | Short URL code doesn't exist or route not found |
+| `422` | Unprocessable Entity | Validation failed (invalid URL format, rate limit) |
+| `500` | Internal Server Error | Unexpected server error |
+
+---
+
+## 🧪 Testing the API
+
+### Using Postman
+
+We provide a ready-to-use Postman collection with all endpoints pre-configured!
+
+#### Import the Collection
+
+1. **Download the collection:**
+   - File: `ShortLink_API.postman_collection.json` (in the root directory)
+   - Or [download from GitHub](https://github.com/your-username/short-link/blob/main/ShortLink_API.postman_collection.json)
+
+2. **Import into Postman:**
+   - Open Postman
+   - Click "Import" button (top left)
+   - Select the `ShortLink_API.postman_collection.json` file
+   - Click "Import"
+
+#### Configure Environment Variables
+
+The collection includes these variables (automatically set):
+
+| Variable | Description | Auto-Set |
+|----------|-------------|----------|
+| `base_url` | API base URL | ✅ Default: `http://localhost:3000` |
+| `api_access_token` | Your API access token | ❌ **You must set this** |
+| `session_token` | User session token | ✅ Auto-saved after login |
+| `short_code` | Last encoded short code | ✅ Auto-saved after encode |
+
+**To set your API access token:**
+1. Click on the collection name
+2. Go to "Variables" tab
+3. Set `api_access_token` to your actual token (from Rails credentials)
+4. Click "Save"
+
+#### Collection Structure
+
+The collection includes:
+
+**1. Authentication**
+- ✅ Login (Create Session) - Auto-saves session token
+
+**2. Short URLs**
+- ✅ Encode URL - Auto-saves short code
+- ✅ Decode URL - Uses saved short code
+- ✅ Decode URL - Not Found (test 404)
+
+**3. Error Cases**
+- ✅ Encode - Missing Authentication (401)
+- ✅ Encode - Invalid URL (HTTP instead of HTTPS)
+- ✅ Encode - Localhost URL (SSRF protection)
+- ✅ Encode - Private IP (SSRF protection)
+
+**4. Health Check**
+- ✅ Server Status
+
+#### Testing Workflow
+
+1. **Update the `api_access_token` variable** with your actual token
+2. **Run "Login"** - Session token is automatically saved
+3. **Run "Encode URL"** - Short code is automatically saved
+4. **Run "Decode URL"** - Uses the saved short code
+5. **Explore error cases** to see validation in action
+
+#### Automated Tests
+
+The collection includes test scripts that:
+- ✅ Automatically save tokens and codes
+- ✅ Validate response structure
+- ✅ Check status codes
+- ✅ Extract data for next requests

@@ -6,9 +6,15 @@ module Api::V1::Auth
     def create
       if user = User.authenticate_by(session_params)
         start_new_session_for(user)
-        render json: { token: Current.session.token }
+
+        data = {
+          token: Current.session.token,
+          user: Current.user.slice(:id, :email_address)
+        }
+
+        render_success(message: "Logged in successfully", data:)
       else
-        render json: { error: "Invalid email address or password" }, status: :unauthorized
+        render_unauthorized(message: "Invalid email address or password")
       end
     end
 

@@ -35,15 +35,15 @@ module ExceptionHandler
   end
 
   def server_error!(err)
-    render_bad_request(message: "Internal Server Error")
+    render_bad_request(message: 'Internal Server Error')
   end
 
   def i18n_invalid_locale!
-    render_error(message: I18n.t("errors.invalid_language"))
+    render_error(message: I18n.t('errors.invalid_language'))
   end
 
   def not_authorized!
-    render_forbidden(message: I18n.t("errors.e_403"))
+    render_forbidden(message: I18n.t('errors.e_403'))
   end
 
   def parameter_missing(exception)
@@ -55,6 +55,6 @@ module ExceptionHandler
   end
 
   def routing_error(exception)
-    render_not_found(message: "Route not found")
+    render_not_found(message: 'Route not found')
   end
 end

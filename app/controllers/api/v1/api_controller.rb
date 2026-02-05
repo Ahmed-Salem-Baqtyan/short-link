@@ -15,7 +15,7 @@ module Api::V1
     end
 
     def authenticate_request
-      unless request.headers["API-ACCESS-TOKEN"] == Rails.application.credentials.api_access_token
+      unless request.headers['API-ACCESS-TOKEN'] == Rails.application.credentials.api_access_token
         render_unauthorized(message: "You dont have access to this resource")
       end
     end

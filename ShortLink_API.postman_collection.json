@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "shortlink-api-collection",
+		"name": "ShortLink API",
+		"description": "Complete API collection for ShortLink URL Shortening Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login (Create Session)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Save session token to environment variable",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"session_token\", jsonData.data.token);",
+									"    pm.environment.set(\"user_id\", jsonData.data.user.id);",
+									"    console.log(\"Session token saved:\", jsonData.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email_address\": \"demo@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/sessions/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"sessions",
+								"create"
+							]
+						},
+						"description": "Authenticate user and receive session token for subsequent requests"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Short URLs",
+			"item": [
+				{
+					"name": "Encode URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extract and save the short code",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    var encodedUrl = jsonData.data.encoded_url;",
+									"    var code = encodedUrl.split('/').pop();",
+									"    pm.environment.set(\"short_code\", code);",
+									"    console.log(\"Short code saved:\", code);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{session_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://codesubmit.io/library/react\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/encode",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"encode"
+							]
+						},
+						"description": "Encode a long URL into a short URL. Requires both API token and user session token."
+					},
+					"response": []
+				},
+				{
+					"name": "Decode URL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/decode/{{short_code}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"decode",
+								"{{short_code}}"
+							]
+						},
+						"description": "Decode a short URL to get the original URL. Only requires API token (public endpoint)."
+					},
+					"response": []
+				},
+				{
+					"name": "Decode URL - Not Found",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/decode/INVALID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"decode",
+								"INVALID"
+							]
+						},
+						"description": "Test decoding a non-existent short code (returns 404)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Error Cases",
+			"item": [
+				{
+					"name": "Encode - Missing Authentication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://example.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/encode",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"encode"
+							]
+						},
+						"description": "Test encode without authentication (should return 401)"
+					},
+					"response": []
+				},
+				{
+					"name": "Encode - Invalid URL (HTTP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{session_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"short_url\": {\n    \"url\": \"http://example.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/encode",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"encode"
+							]
+						},
+						"description": "Test encoding HTTP URL (should fail - HTTPS required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Encode - Localhost URL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{session_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://localhost/test\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/encode",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"encode"
+							]
+						},
+						"description": "Test encoding localhost URL (should fail - SSRF protection)"
+					},
+					"response": []
+				},
+				{
+					"name": "Encode - Private IP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "API-ACCESS-TOKEN",
+								"value": "{{api_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{session_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://192.168.1.1/admin\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/short_urls/encode",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"short_urls",
+								"encode"
+							]
+						},
+						"description": "Test encoding private IP (should fail - SSRF protection)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Server Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/up",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"up"
+							]
+						},
+						"description": "Check if the server is running and healthy"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "api_access_token",
+			"value": "your_api_access_token_here",
+			"type": "string"
+		},
+		{
+			"key": "session_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "short_code",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

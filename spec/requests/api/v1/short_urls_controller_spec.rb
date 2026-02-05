@@ -6,7 +6,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
   let(:user) { create(:user) }
   let(:user_session) { create(:session, user: user) }
   let(:api_access_token) { Rails.application.credentials.api_access_token }
-
+  
   let(:valid_headers) do
     {
       'API-ACCESS-TOKEN' => api_access_token,
@@ -252,7 +252,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       it 'enforces per-user URL creation limit' do
         # Set limit to 2 and create 2 URLs to reach the limit
         stub_const('ShortUrl::SHORT_LINKS_LIMIT', 2)
-
+        
         2.times do
           create(:short_url, user: user)
         end
@@ -265,7 +265,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
 
       it 'allows creating URLs up to the limit' do
         stub_const('ShortUrl::SHORT_LINKS_LIMIT', 3)
-
+        
         # Create 2 URLs
         2.times do
           create(:short_url, user: user)
@@ -319,7 +319,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
 
       it 'decodes URL case-sensitively' do
         short_url.update(code: 'AbC123')
-
+        
         get('/api/v1/short_urls/decode/AbC123', headers: valid_headers)
         expect(response).to(have_http_status(:ok))
 
@@ -407,7 +407,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       end
 
       it 'returns 401 when API access token is invalid' do
-        headers = {
+        headers = { 
           'API-ACCESS-TOKEN' => 'invalid_token',
           'Content-Type' => 'application/json'
         }
@@ -417,7 +417,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       end
 
       it 'does NOT require session token (public endpoint)' do
-        headers = {
+        headers = { 
           'API-ACCESS-TOKEN' => api_access_token,
           'Content-Type' => 'application/json'
         }
@@ -427,7 +427,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       end
 
       it 'ignores invalid session tokens (no authentication required)' do
-        headers = {
+        headers = { 
           'API-ACCESS-TOKEN' => api_access_token,
           'Authorization' => 'Bearer invalid_token',
           'Content-Type' => 'application/json'
@@ -473,7 +473,7 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       it 'decodes URLs that were recently created' do
         new_url_params = { short_url: { url: 'https://example.com/new' } }
         post('/api/v1/short_urls/encode', params: new_url_params.to_json, headers: valid_headers)
-
+        
         new_code = ShortUrl.last.code
         get("/api/v1/short_urls/decode/#{new_code}", headers: valid_headers)
 
@@ -488,14 +488,14 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
       # Encode
       encode_params = { short_url: { url: 'https://codesubmit.io/library/react' } }
       post('/api/v1/short_urls/encode', params: encode_params.to_json, headers: valid_headers)
-
+      
       expect(response).to(have_http_status(:ok))
       encoded_url = data_response[:encoded_url]
       code = encoded_url.split('/').last
 
       # Decode
       get("/api/v1/short_urls/decode/#{code}", headers: valid_headers)
-
+      
       expect(response).to(have_http_status(:ok))
       expect(data_response[:decoded_url]).to(eq('https://codesubmit.io/library/react'))
     end
@@ -503,13 +503,13 @@ RSpec.describe('Api::V1::ShortUrlsController', type: :request) do
     it 'persists URLs across application restarts' do
       encode_params = { short_url: { url: 'https://example.com/persistent' } }
       post('/api/v1/short_urls/encode', params: encode_params.to_json, headers: valid_headers)
-
+      
       code = ShortUrl.last.code
 
       Current.reset
 
       get("/api/v1/short_urls/decode/#{code}", headers: valid_headers)
-
+      
       expect(response).to(have_http_status(:ok))
       expect(data_response[:decoded_url]).to(eq('https://example.com/persistent'))
     end

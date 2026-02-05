@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "application#server_status"
+  root 'application#server_status'
 
   resource :session
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         end
       end
 
-      get("short_urls/decode/:code", to: "short_urls#decode", as: :decode_short_url, constraints: { code: /[^\/]+/ })
+      get('short_urls/decode/:code', to: 'short_urls#decode', as: :decode_short_url, constraints: { code: /[^\/]+/ })
 
       namespace :auth do
         resources :sessions, only: [] do
@@ -31,6 +31,6 @@ Rails.application.routes.draw do
     end
 
     # Catch-all for unmatched API routes
-    match "*path", to: "v1/api#not_found", via: :all
+    match '*path', to: 'v1/api#not_found', via: :all
   end
 end
