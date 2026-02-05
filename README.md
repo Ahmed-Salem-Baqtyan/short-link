@@ -849,15 +849,26 @@ We provide a ready-to-use Postman collection with all endpoints pre-configured!
 
 #### Import the Collection
 
-1. **Download the collection:**
-   - File: `ShortLink_API.postman_collection.json` (in the root directory)
-   - Or [download from GitHub](https://github.com/your-username/short-link/blob/main/ShortLink_API.postman_collection.json)
+**Option 1: Import from Local File** ⭐ (Recommended)
+
+1. **Locate the collection file:**
+   - File: `ShortLink_API.postman_collection.json` (in the project root directory)
 
 2. **Import into Postman:**
    - Open Postman
    - Click "Import" button (top left)
-   - Select the `ShortLink_API.postman_collection.json` file
+   - Click "Upload Files" and select `ShortLink_API.postman_collection.json`
+   - Or drag and drop the file into Postman
    - Click "Import"
+
+**Option 2: Import via URL in Postman** (Requires GitHub access)
+
+In Postman:
+1. Click "Import" → "Link"
+2. Paste: `https://raw.githubusercontent.com/Ahmed-Salem-Baqtyan/short-link/main/ShortLink_API.postman_collection.json`
+3. Click "Continue" → "Import"
+
+**Note:** If you're behind a VPN or firewall, use Option 1 (local file import).
 
 #### Configure Environment Variables
 
