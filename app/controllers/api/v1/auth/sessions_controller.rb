@@ -1,5 +1,7 @@
 module Api::V1::Auth
   class SessionsController < Api::V1::ApiController
+    rate_limit to: 10, within: 1.minute, only: :create, by: -> { params[:email_address].presence || request.remote_ip }
+    
     allow_unauthenticated_access only: [ :create ]
 
     # POST /api/v1/auth/sessions

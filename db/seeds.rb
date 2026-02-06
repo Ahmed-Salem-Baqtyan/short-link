@@ -11,4 +11,4 @@
 
 
 
-User.create!(email_address: 'demo@gmail.com', password: 'password')
+User.create!(email_address: 'admin@shorurl.com', password: 'pass194*')

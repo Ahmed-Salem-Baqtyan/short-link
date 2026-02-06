@@ -1,16 +1,27 @@
 module Api::V1
   class ShortUrlsController < ApiController
+    rate_limit to: 40,
+               within: 1.minute,
+               only: :encode,
+               by: -> { current_user&.id || request.remote_ip },
+               with: -> { raise RateLimitExceeded }
 
-    before_action :validate_encode_params!, only: [ :encode ]
+    rate_limit to: 30, within: 1.minute, only: :decode, by: -> { request.remote_ip }
+
     allow_unauthenticated_access only: [:decode]
 
     # POST /api/v1/short_urls/encode
     def encode
-      short_url = current_user.short_urls.create!(encode_params)
-      encoded_url = "#{request.base_url}/api/v1/short_urls/decode/#{short_url.code}"
-      data = { encoded_url: encoded_url }
+      short_url = current_user.short_urls.new(encode_params)
 
-      render_success(message: "Link encoded successfully", data:)
+      if short_url.save
+        encoded_url = "#{request.base_url}/api/v1/short_urls/decode/#{short_url.code}"
+        data = { encoded_url: encoded_url }
+
+        render_success(message: "Link encoded successfully", data:)
+      else
+        render_unprocessable_entity(message: short_url.errors.full_messages.join(", "))
+      end
     end
 
     # GET /api/v1/short_urls/decode/:code

@@ -46,7 +46,7 @@
 							"raw": "{\n  \"email_address\": \"demo@example.com\",\n  \"password\": \"password123\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/auth/sessions/create",
+							"raw": "{{base_url}}/api/v1/auth/sessions",
 							"host": [
 								"{{base_url}}"
 							],
@@ -54,8 +54,7 @@
 								"api",
 								"v1",
 								"auth",
-								"sessions",
-								"create"
+								"sessions"
 							]
 						},
 						"description": "Authenticate user and receive session token for subsequent requests"
@@ -184,161 +183,6 @@
 			]
 		},
 		{
-			"name": "Error Cases",
-			"item": [
-				{
-					"name": "Encode - Missing Authentication",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://example.com\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/short_urls/encode",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"short_urls",
-								"encode"
-							]
-						},
-						"description": "Test encode without authentication (should return 401)"
-					},
-					"response": []
-				},
-				{
-					"name": "Encode - Invalid URL (HTTP)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "API-ACCESS-TOKEN",
-								"value": "{{api_access_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{session_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"short_url\": {\n    \"url\": \"http://example.com\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/short_urls/encode",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"short_urls",
-								"encode"
-							]
-						},
-						"description": "Test encoding HTTP URL (should fail - HTTPS required)"
-					},
-					"response": []
-				},
-				{
-					"name": "Encode - Localhost URL",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "API-ACCESS-TOKEN",
-								"value": "{{api_access_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{session_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://localhost/test\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/short_urls/encode",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"short_urls",
-								"encode"
-							]
-						},
-						"description": "Test encoding localhost URL (should fail - SSRF protection)"
-					},
-					"response": []
-				},
-				{
-					"name": "Encode - Private IP",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "API-ACCESS-TOKEN",
-								"value": "{{api_access_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{session_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"short_url\": {\n    \"url\": \"https://192.168.1.1/admin\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/short_urls/encode",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"short_urls",
-								"encode"
-							]
-						},
-						"description": "Test encoding private IP (should fail - SSRF protection)"
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Health Check",
 			"item": [
 				{
@@ -347,12 +191,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/up",
+							"raw": "{{base_url}}",
 							"host": [
 								"{{base_url}}"
-							],
-							"path": [
-								"up"
 							]
 						},
 						"description": "Check if the server is running and healthy"
