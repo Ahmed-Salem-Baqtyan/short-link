@@ -56,6 +56,10 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
+  config.cache_store = :solid_cache_store
+
+  config.cache_store = :solid_cache_store, { expires_in: 1.hour }
+
   # Annotate rendered view with file names.
   config.action_view.annotate_rendered_view_with_filenames = true
 

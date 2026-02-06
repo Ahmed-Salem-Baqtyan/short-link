@@ -1,5 +1,12 @@
 module Api::V1
   class ShortUrlsController < ApiController
+    rate_limit to: 40,
+               within: 1.minute,
+               only: :encode,
+               by: -> { current_user&.id || request.remote_ip },
+               with: -> { raise RateLimitExceeded }
+
+    rate_limit to: 30, within: 1.minute, only: :decode, by: -> { request.remote_ip }
 
     before_action :validate_encode_params!, only: [ :encode ]
     allow_unauthenticated_access only: [:decode]

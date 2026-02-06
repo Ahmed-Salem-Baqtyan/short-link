@@ -17,7 +17,7 @@
 
 class ShortUrl < ApplicationRecord
   # Constants
-  SHORT_LINKS_LIMIT = 1000
+  SHORT_LINKS_LIMIT = 100
 
   # Associations
   belongs_to :user
@@ -49,7 +49,7 @@ class ShortUrl < ApplicationRecord
   def validate_url
     return if url.blank?
 
-    V1::ShortUrl::UrlValidator.new(short_url: self).call
+    errors.add(:url, 'is not a valid URL') unless Url.new(url).valid?
   end
 
   def set_short_code

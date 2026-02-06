@@ -13,6 +13,10 @@ module ExceptionHandler
       render_bad_request(message: e.message)
     end
 
+    rescue_from ::RateLimitExceeded do |_e|
+      render_error(message: "Rate limit exceeded, please try again later.", status_code: 429)
+    end
+
     unless Rails.env.local?
       rescue_from StandardError, with: :server_error! do |err|
         server_error!(err)
